@@ -83,8 +83,6 @@ export default function PokeTypeListItem(props) {
     const classes = useStyles();
 
     const { PokeType } = props;
-
-    Log.debugGroup("Check Pokemon Types", PokeType);
     return (
         <div className={classes.root}>
             <div className={"poke-type-color name-type-"+PokeType.name}>

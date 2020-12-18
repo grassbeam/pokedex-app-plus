@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { withStyles } from '@material-ui/core/styles';
 import { Util, Log } from '../../utility';
@@ -101,16 +100,7 @@ class PokeDataPage extends Component {
                 })
                 .then(response=>{
     
-                    const pokemonData = {
-                        id: response.id,
-                        image: response.sprites.front_default,
-                        abilities: response.abilities,
-                        base_experience: response.base_experience,
-                        height: response.height,
-                        weight: response.weight,
-                        types: response.types.map((itm)=>({ slot: itm.slot, name: itm.type.name , url: itm.type.url})),
-                        stats: response.stats,
-                    };
+                    const pokemonData = PokeStorage.generatePokeDataFromRemote(response);
                     this.props.dispatch(PokeStorage.setPokemonData(pokemonData, pokeID));
                     updateloadingStat();
                 }).catch(ex=>{

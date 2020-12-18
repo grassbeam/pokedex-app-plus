@@ -58,7 +58,8 @@ export default function ListPokeData (props) {
                                         <ListPokeDataItemSkeleton />
                                     :
                                         <ListPokeDataItem
-                                            PokeData={item}
+                                            PokemonID={item.pokeID}
+                                            disableClick={false}
                                         />
                                 }
                                 

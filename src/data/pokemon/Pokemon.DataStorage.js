@@ -37,7 +37,20 @@ export default function PokemonStorage(state=PokeInitialState, action) {
   }
 
 
-
+  export function generatePokeDataFromRemote(response) {
+    return ({
+        id: response.id,
+        name: response.name,
+        image: response.sprites.front_default,
+        abilities: response.abilities,
+        base_experience: response.base_experience,
+        held_items: response.held_items,
+        height: response.height,
+        weight: response.weight,
+        types: response.types.map((itm)=>({ slot: itm.slot, name: itm.type.name , url: itm.type.url})),
+        stats: response.stats,
+    });
+  }
 
 
   export function getPokeIdFromDetailURL(detailURL) {
@@ -65,7 +78,7 @@ export default function PokemonStorage(state=PokeInitialState, action) {
   }
 
   export function getPokemonDataByID(props, PokeID) {
-    var result = { };
+    var result = null;
     if (!Util.isNullOrUndefined(props[DataStorageType.POKE_STORAGE])) {
 
       if (!Util.isNullOrUndefined(props[DataStorageType.POKE_STORAGE][STORAGE_POKE_DATA])) {
@@ -73,5 +86,36 @@ export default function PokemonStorage(state=PokeInitialState, action) {
       }
       
     } 
+    return result;
+  }
+
+  export function getPokemonStatsByID(props, PokeID) {
+    const tempRawData = getPokemonDataByID(props, PokeID);
+    let result = null;
+    if (!Util.isNullOrUndefined(tempRawData)) {
+      if (!Util.isNullOrUndefined(tempRawData.stats)) {
+        result = tempRawData.stats.map((itm,idx)=>({
+          point: itm.base_stat,
+          title: itm.stat.name,
+        }));
+      }
+    }
+    
+    return result;
+  }
+
+  export function getPokemonHeldItemByID(props, PokeID) {
+    const tempRawData = getPokemonDataByID(props, PokeID);
+    let result = null;
+    if (!Util.isNullOrUndefined(tempRawData)) {
+      if (!Util.isNullOrUndefined(tempRawData.held_items)) {
+        result = tempRawData.held_items.map((itm,idx)=>({
+          name: itm.item.name,
+          url: itm.item.url,
+          rarity: itm.version_details[0].rarity,
+        }));
+      }
+    }
+    
     return result;
   }

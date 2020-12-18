@@ -9,7 +9,8 @@ import withMainComponent from './components/high-order/withMainComponent';
 
 const HOCPages = {
   PokeData: withMainComponent(Pages.PokeData, "PokeDex Plus"),
-  
+  PokeDetail: withMainComponent(Pages.PokeDetail, "PokeDex Plus"),
+  Error404: withMainComponent(Pages.Error404, "PokeDex Plus"),
 }
 
 const theme = createMuiTheme({
@@ -29,6 +30,8 @@ function App() {
         <BrowserRouter>
           <Switch>
                 <Route exact path="/" component={HOCPages.PokeData} />
+                <Route path="/detail/:id" component={HOCPages.PokeDetail}  />
+                <Route exact path="/error-404" component={HOCPages.Error404} />
           </Switch>
         </BrowserRouter>
       </ThemeProvider>

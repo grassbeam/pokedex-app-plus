@@ -46,3 +46,20 @@ export function debugGroupExpandCollapsed(groupTitle, items, isCollapsed) {
       console.groupEnd();
     }
   }
+
+  
+function error(msg, exception) {
+  if (exception !== null && exception !== undefined) {
+    if (exception.message !== null && exception.message !== undefined
+      && exception.name !== null && exception.name !== undefined
+      && exception.stack !== null && exception.stack !== undefined) {
+      console.group("%c"+msg+exception.name + ": " + exception.message, "color: #ffebee, background: #c62828");
+      console.error(exception.stack);
+      console.groupEnd();
+    } else {
+      console.error(msg);
+    }
+  } else {
+    console.error(msg);
+  }
+}
