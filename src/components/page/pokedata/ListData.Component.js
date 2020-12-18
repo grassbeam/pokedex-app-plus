@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import ListPokeDataItem from './ListData.Item.Component';
+import ListPokeDataItemSkeleton from './ListData.Item.Skeleton';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +40,7 @@ export default function ListPokeData (props) {
         for (var i=0; i < PageSize; i++) {
             additionalLoading.push(
                 <CreateItemGrid key={"PokeDataLoading-"+i}>
-                    <Paper className={classes.paper}>Loading...</Paper>
+                    <ListPokeDataItemSkeleton />
                 </CreateItemGrid>
             );
         }
@@ -54,7 +55,7 @@ export default function ListPokeData (props) {
                             <CreateItemGrid key={"PokeData-"+idx}>
                                 {
                                     item.isLoading?
-                                        <Paper className={classes.paper}>Loading...</Paper>
+                                        <ListPokeDataItemSkeleton />
                                     :
                                         <ListPokeDataItem
                                             PokeData={item}

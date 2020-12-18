@@ -25,7 +25,7 @@ export default function BtnProgress(props) {
 
     const classes = useStyles();
 
-    const { onClick, isLoading, btnClassName, text, variant, color } = props
+    const { onClick, isLoading, btnClassName, text } = props
 
     return(
         <div className={classes.wrapper}>

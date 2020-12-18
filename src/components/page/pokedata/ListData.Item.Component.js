@@ -9,7 +9,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import SearchIcon from '@material-ui/icons/Search';
 import { Util, Log, DataStorageType } from '../../../utility';
+import PokeTypeList from '../../pokemon-detail/poke-types/PokeTypeList.Component';
+import ListPokeDataItemSkeleton from './ListData.Item.Skeleton';
+
 import * as PokeStorage from '../../../data/pokemon/Pokemon.DataStorage';
 
 
@@ -17,6 +21,7 @@ const useStyles = makeStyles((theme) => (
     {
         root: {
         //   maxWidth: 345,
+            height: '100%',
         },
         btnLeft: {
             marginLeft: 'auto',
@@ -34,33 +39,37 @@ const useStyles = makeStyles((theme) => (
 
     const storagePokeData = PokeStorage.getPokemonDataByID(props, PokeData.pokeID);
 
+    Log.debugGroup("Check ListData Item Pokemon", storagePokeData);
+
     if (Util.isNullOrUndefined(storagePokeData)) {
         // Must show error
-        return (<Paper className={classes.paper}>Loading...</Paper>);
+        return (<ListPokeDataItemSkeleton/>);
     } else {
         return(
             <Card className={classes.root}>
-              <CardActionArea>
+              <CardActionArea style={{ height:'100%', }}>
                 <CardMedia
                   component="img"
                   alt={ PokeData.name }
-                  height="150"
+                  height="145"
                   image={storagePokeData.image}
                   title={ PokeData.name }
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
+                  <Typography gutterBottom variant="subtitle1" component="span">
+                    { "#"+(`${storagePokeData.id}`).padStart(3, '0') }
+                  </Typography>
+                  <Typography gutterBottom variant="h5" component="h3">
                     { PokeData.name }
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                    across all continents except Antarctica
-                  </Typography>
+                  <PokeTypeList
+                    ListPokeType={storagePokeData.types}
+                  />
                 </CardContent>
                 <CardActions>
-                    <Link className={classes.btnLeft} color="primary">
-                        Detail
-                    </Link>
+                    {/* <Link className={classes.btnLeft} color="primary">
+                        <SearchIcon/>Detail
+                    </Link> */}
                 </CardActions>
               </CardActionArea>
             </Card>

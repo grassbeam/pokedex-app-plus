@@ -108,7 +108,7 @@ class PokeDataPage extends Component {
                         base_experience: response.base_experience,
                         height: response.height,
                         weight: response.weight,
-                        types: response.types,
+                        types: response.types.map((itm)=>({ slot: itm.slot, name: itm.type.name , url: itm.type.url})),
                         stats: response.stats,
                     };
                     this.props.dispatch(PokeStorage.setPokemonData(pokemonData, pokeID));
