@@ -9,3 +9,7 @@ export const CreateDispatcherObj = (type, payload, storeloc, value) => {
       value: value
     };
   }
+
+  // export const StorageConnector = (mapStateToProps, dispatchProps=null) => {
+  //   return compose(connect(mapStateToProps, dispatchProps, null, {forwardRef: true}));
+  // }

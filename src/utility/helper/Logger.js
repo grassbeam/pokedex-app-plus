@@ -1,23 +1,23 @@
 import * as Config from "../../config.js";
 
 
-function debugStr(str) {
+export function debugStr(str) {
     if(Config.IS_DEBUG) {
       console.log("%c" + str, 'background: #222; color: #bada55');
     }
   }
   
-  function debugGroupCollapsed(groupTitle,items) {
+export function debugGroupCollapsed(groupTitle,items) {
     if(Config.IS_DEBUG)
       debugGroupExpandCollapsed(groupTitle, items, true);
   }
   
-  function debugGroup(groupTitle, items) {
+export function debugGroup(groupTitle, items) {
     if(Config.IS_DEBUG)
       debugGroupExpandCollapsed(groupTitle, items, false);
   }
   
-  function debugGroupExpandCollapsed(groupTitle, items, isCollapsed) {
+export function debugGroupExpandCollapsed(groupTitle, items, isCollapsed) {
     const IS_DEBUG = Config.IS_DEBUG;
     if(IS_DEBUG) {
       isCollapsed? console.groupCollapsed(groupTitle) : console.group(groupTitle);
