@@ -1,17 +1,12 @@
 import React from 'react';
-import { Util, Log } from '../../../utility'
+import PropTypes from 'prop-types';
 import PokeTypeListItem from './PokeTypeList.Item.Component';
-
-
-
 
 
 
 export default function PokeTypeList(props) {
 
     const { ListPokeType } = props;
-
-
 
     return(
         <>
@@ -27,3 +22,6 @@ export default function PokeTypeList(props) {
     );
 }
 
+PokeTypeList.propTypes = {
+    ListPokeType: PropTypes.arrayOf(PropTypes.object).isRequired
+};

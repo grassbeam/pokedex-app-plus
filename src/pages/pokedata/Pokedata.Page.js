@@ -51,7 +51,7 @@ class PokeDataPage extends PureComponent {
             nextPageURL: "",
             LoadingNextPage: true,
             listDataPoke: [
-                // {name: "Bulbasaur", idx: 0, detailURL:"", isLoading: true, isError: false, data: null, // data ke redux },
+                // model on PokemonDataItemPage,
             ],
             filterTypeID: "",
         };
@@ -102,33 +102,6 @@ class PokeDataPage extends PureComponent {
     // requester = source detail request
     getDetailPokemon(detailURL, idx, pokeID, requester) {
         const tempPokeData = PokeStorage.getPokemonDataByID(this.props, pokeID);
-
-        const updateloadingStat = () =>{ // Performance problem
-            const tmpListDataPoke = this.state.listDataPoke;
-            tmpListDataPoke[idx].isLoading = false;
-            if (this.state.currentRequester == requester) {
-                this.setState({
-                    listDataPoke: tmpListDataPoke,
-                });
-            }
-        };
-
-        // if (!Util.isNullOrUndefined(tempPokeData)) {
-        //     // updateloadingStat();
-        // } else {
-
-        //     PokeDS.getDetailPokemonByURL(detailURL)
-        //         .then(res => {
-        //             return res.data;
-        //         })
-        //         .then(response=>{
-        //             const pokemonData = PokeStorage.generatePokeDataFromRemote(response);
-        //             this.props.dispatch(PokeStorage.setPokemonData(pokemonData, pokeID));
-        //             // updateloadingStat();
-        //         }).catch(ex=>{
-        //             Log.debugStr(ex);
-        //     });
-        // }
 
         if (Util.isNullOrUndefined(tempPokeData)) {
             PokeDS.getDetailPokemonByURL(detailURL)

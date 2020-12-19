@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -37,3 +38,7 @@ const useStyles = makeStyles((theme) => ({
         </AppBar>
     );
 }
+
+MainHeader.propTypes = {
+  PageTitle: PropTypes.string.isRequired,
+};

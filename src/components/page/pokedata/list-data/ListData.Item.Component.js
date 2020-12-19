@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -91,3 +92,15 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(connect(mapStateToProps)(ListPokeDataItem));
+
+ListPokeDataItem.propTypes = {
+  PokemonID: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+  disableClick: PropTypes.bool
+};
+
+ListPokeDataItem.defaultProps = {
+  disableClick: false,
+};

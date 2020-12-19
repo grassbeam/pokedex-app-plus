@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Util, Log } from '../../../utility'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,3 +93,6 @@ export default function PokeTypeListItem(props) {
 
 }
 
+PokeTypeListItem.propTypes = {
+    PokeType: PropTypes.object.isRequired,
+};

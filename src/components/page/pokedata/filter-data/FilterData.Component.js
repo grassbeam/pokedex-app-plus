@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -203,3 +204,8 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(FilterDataPokeComponent);
+
+FilterDataPokeComponent.propTypes = {
+    onSubmitFilter: PropTypes.func.isRequired, 
+    onClearFilter: PropTypes.func.isRequired,
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-import clsx from 'clsx';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { grey } from '@material-ui/core/colors';
@@ -42,3 +42,17 @@ export default function BtnProgress(props) {
         </div>
     );
 }
+
+BtnProgress.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  btnClassName: PropTypes.object,
+  text: PropTypes.string.isRequired,
+  variant: PropTypes.string,
+  color: PropTypes.string,
+};
+
+BtnProgress.defaultProps = {
+  variant: "contained",
+  color: "primary"
+};

@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { Util, Log, DataStorageType } from '../../../utility';
+import { Util, DataStorageType } from '../../../utility';
 import { withRouter } from "react-router-dom";
+import PokeStatsPoint from './PokeStats.Point.Component';
 
 import * as PokeStorage from '../../../data/pokemon/Pokemon.DataStorage';
 
@@ -46,7 +46,7 @@ function PokeStatsDetail(props) {
                 {
                     PokeStatsData.map((pokeStatsData,idx) =>(
                         <Grid item sm={2} xs={4}   key={`poke-stats-data-${idx}`}> 
-                            <PokeStatsItem 
+                            <PokeStatsPoint 
                                 Point={ pokeStatsData.point }
                                 Title={ pokeStatsData.title }
                             />
@@ -63,46 +63,12 @@ const mapStateToProps = (state) => ({
 
 export default withRouter(connect(mapStateToProps)(PokeStatsDetail));
 
+PokeStatsDetail.propTypes = {
+    PokemonID: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]).isRequired,
+};
 
 
 
-function PokeStatsItem(props) {
-
-    const { Point, Title } = props;
-
-    const tempIntPoint = parseInt(Point);
-
-    const powerHeight = Math.ceil(tempIntPoint/15);
-
-    const powerLeft = 15-powerHeight;
-
-
-    const powerHeightComp = []
-    for (let i = 0; i< powerHeight; i++) {
-        powerHeightComp.push(
-            <div style={{ border: '1px solid blue', backgroundColor: 'blue', padding: '5px', marginTop: '3px'}}  key={`power-height-comp-${i}`}>
-
-            </div>
-        );
-    }
-    const powerLeftComp = []
-    for (let i = 0; i< powerLeft; i++) {
-        powerLeftComp.push(
-            <div style={{ border: '1px solid #000000', backgroundColor: '#F0F0F0', padding: '5px', marginTop: '3px'}} key={`power-left-comp-${i}`}>
-
-            </div>
-        );
-    }
-
-    return(
-        <Box>
-            { powerLeftComp }
-            { powerHeightComp }
-
-            
-            <Typography variant="body2" gutterBottom style={{ textTransform: 'uppercase', textAlign: 'center' }}>
-                { Title }
-            </Typography>
-        </Box>
-    );
-}
