@@ -1,15 +1,14 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import ReducerStorage from './data/DataStorage.js';
 
 import {persistStore, persistCombineReducers} from 'redux-persist';
 import storage from 'redux-persist/es/storage';
 import * as Config from "./config";
-import { Log } from "./utility";
 
 const rootPersistConfig = {
     key: Config.STOR_KEY.RootAllStorage,
-    storage: storage
+    storage: storage,
   };
 
 let persitedReducer= persistCombineReducers(rootPersistConfig, ReducerStorage);

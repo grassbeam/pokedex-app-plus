@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => (
     const storagePokeData = PokeStorage.getPokemonDataByID(props, PokemonID);
 
     const dataClickHandler = (pokeID) => {
-      Log.debugStr(`Clicked PokeID = ${pokeID}`);
       props.history.push(`/detail/${storagePokeData.id}`);
     }
 

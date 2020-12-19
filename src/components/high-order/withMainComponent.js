@@ -1,11 +1,13 @@
-import React, { PureComponent, lazy } from "react";
+import React, { PureComponent } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
+import Box from '@material-ui/core/Box';
 import MainComponent from '../main/Main.Component';
+import CollapsibleAlert from '../alert/CollapsibleAlert.Component';
+import { Log } from '../../utility';
 
 
-
-export default function(PageComponent, PageTitle="") {
+export default function withMainComponent(PageComponent, PageTitle="") {
 
 
   const mapStateToProps = state => ({
@@ -23,8 +25,15 @@ export default function(PageComponent, PageTitle="") {
         ErrorContent: {
           Title: "Error",
           Message: "",
-        }
+          Type: "error",
+        },
       };
+    }
+
+    componentDidMount() {
+      if (this.state.isNewLoad) {
+        this.setState({ isNewLoad : false });
+      }
     }
 
 
@@ -34,13 +43,20 @@ export default function(PageComponent, PageTitle="") {
         }, callback);
     }
 
-    showErrorMessage = (Title, Message) => {
+    showErrorMessage = (Title, Message, Type="error", callback=(()=>{}) ) => {
       this.setState({
         isShowError: true,
         ErrorContent: {
           Title,
           Message,
+          Type,
         }
+      }, callback);
+    }
+
+    closeErrorMessage = () => {
+      this.setState({
+        isShowError: false,
       });
     }
 
@@ -50,7 +66,17 @@ export default function(PageComponent, PageTitle="") {
             PageTitle={ PageTitle }
             ContainerClass="something" 
           >
-            <PageComponent {...this.props} ShowLoaderSpinner={this.showLoaderSpinner.bind(this)} />
+            <Box style={{ marginTop: '10px' }}>
+              <CollapsibleAlert
+                isShowAlert={this.state.isShowError}
+                Title={this.state.ErrorContent.Title}
+                AlertSeverity="error"
+                onClose={ this.closeErrorMessage.bind(this) }
+              >
+                { this.state.ErrorContent.Message }
+              </CollapsibleAlert>
+            </Box>
+            <PageComponent {...this.props} ShowLoaderSpinner={this.showLoaderSpinner.bind(this)} ShowErrorMessage={this.showErrorMessage.bind(this)} />
           </MainComponent>
 
         );

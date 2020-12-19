@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { withRouter } from "react-router-dom";
-import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,19 +16,24 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    cursor: 'pointer',
   },
 }));
 
- export default function MainHeader (props) {
+function MainHeader (props) {
     const classes = useStyles();
     const { PageTitle } = props;
+
+    const onClickAppBarTitle = () =>{
+      props.history.push("/");
+    };
 
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" className={classes.title}>
-                { PageTitle }
-                </Typography>
+                  <Typography variant="h6" className={classes.title} onClick={ onClickAppBarTitle } >
+                    { PageTitle }
+                  </Typography>
                     
                     
                 <Button color="inherit" onClick={()=>props.history.push("/login")} >Compare Pokemon</Button>
@@ -38,6 +42,8 @@ const useStyles = makeStyles((theme) => ({
         </AppBar>
     );
 }
+
+export default withRouter(MainHeader)
 
 MainHeader.propTypes = {
   PageTitle: PropTypes.string.isRequired,

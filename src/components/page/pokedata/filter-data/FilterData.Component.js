@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
@@ -15,11 +15,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Util, Log, DataStorageType } from '../../../../utility';
+import { Util, DataStorageType } from '../../../../utility';
 import BtnProgress from '../../../button/btn-progress/BtnProgress.Component';
 
 import * as PokeTypeStorage from '../../../../data/types/Types.DataStorage';
-import * as PokeTypeDS from '../../../../data/types/Types.DataSource';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
   }));
   
   
-
  function FilterDataPokeComponent(props) {
 
     const { onSubmitFilter, onClearFilter } = props;
@@ -60,47 +58,9 @@ const useStyles = makeStyles((theme) => ({
 
     const [expanded, setExpanded] = React.useState(false);
 
-    const [loadingMasterData, setLoadingMasterData] = React.useState(Util.isNullOrUndefined(typePokeData));
-
     const [filterID, handleFilter] = React.useState("");
-    
-    const [isUpdatingDataOnProgress, setUpdatingDataProgress] = React.useState(false);
 
-    useEffect(()=>{
-
-        if (!isUpdatingDataOnProgress) {
-            if (Util.isNullOrUndefined(typePokeData)) {
-                // Must fetch the data...
-                handleFetchPokeType();
-            } else {
-                // Check if need to load it
-
-            }
-        }
-    });
-
-    const handleFetchPokeType = () => {
-        setUpdatingDataProgress(true);
-        PokeTypeDS.getPokemonTypesList()
-            .then((res) => res.data)
-            .then((response) => {
-                let responseObj = { };
-                response.results.map((resItem)=>{
-                    let typeID = PokeTypeStorage.getTypeIdFromURL(resItem.url);
-                    responseObj[typeID] = PokeTypeStorage.generateTypeMasterData(resItem)
-                })
-                const dispatchObject = PokeTypeStorage.setPokemonTypeData(responseObj);
-                props.dispatch(dispatchObject);
-                setUpdatingDataProgress(false);
-                setLoadingMasterData(false);
-            }).catch(error=>{
-                setUpdatingDataProgress(true); // keep it to true so not loading often
-                Log.error(error);
-                if(Util.isNullOrUndefined(typePokeData)) {
-                    // Show Error, because the data still empty and the API failed to response
-                }
-            });
-    }
+    const loadingMasterData = Util.isNullOrUndefined(typePokeData);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -112,7 +72,6 @@ const useStyles = makeStyles((theme) => ({
     };
 
     const handleApplyFilter = () => {
-        Log.debugStr("Applying Filter...")
         if (Util.isNullOrEmpty(filterID)) {
             // handle like clear filter
             onClearFilter();
@@ -129,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
 
     return(
         <Card className={classes.root}>
-            {/* <CardActionArea onClick={handleExpandClick}> */}
                 <CardActions disableSpacing>
                     <Typography variant="subtitle1" >
                         Filter:
@@ -145,7 +103,6 @@ const useStyles = makeStyles((theme) => ({
                     <ExpandMoreIcon />
                     </IconButton>
                 </CardActions>
-            {/* </CardActionArea> */}
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
                     <FormControl className={classes.formControl}>
@@ -176,7 +133,6 @@ const useStyles = makeStyles((theme) => ({
                         <BtnProgress 
                             onClick={handleClearFilter.bind(this)}
                             isLoading={loadingMasterData}
-                            // btnClassName={this.props.classes.btnLoadMore}
                             variant="contained"
                             color="default"
                             text="Clear"
@@ -187,7 +143,6 @@ const useStyles = makeStyles((theme) => ({
                         <BtnProgress 
                             onClick={handleApplyFilter.bind(this)}
                             isLoading={loadingMasterData}
-                            // btnClassName={this.props.classes.btnLoadMore}
                             variant="contained"
                             color="primary"
                             text="Apply"

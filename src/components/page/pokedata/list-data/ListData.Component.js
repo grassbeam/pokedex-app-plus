@@ -47,9 +47,7 @@ export default function ListPokeData (props) {
             );
         }
     }
-
-    Log.debugStr(typeof LoadingNextPage);
-    Log.debugStr(LoadingNextPage);
+    
 
     return (
         <div className={classes.root}>

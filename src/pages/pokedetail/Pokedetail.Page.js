@@ -62,32 +62,38 @@ class PokeDetailPage extends Component {
                 this.props.dispatch(PokeStorage.setPokemonData(pokemonData, this.state.PokeID));
             })
             .catch(error=>{
-                let isException = true;
-                if (error.response) {
-                  // The request was made and the server responded with a status code
-                  // that falls out of the range of 2xx
-                  if (error.response.status == 404) {
-                      isException = false;
-                      this.setState({
-                          isDataNotFound: true,
-                      })
-                  } else {
-                      Log.error(`${error.response.data} HTTP Code = ${error.response.status}`);
-                  }
-                } else if (error.request) {
-                  // The request was made but no response was received
-                  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                  // http.ClientRequest in node.js
-                  console.log(error.request);
-                  Log.error(error.request);
-                } else {
-                  // Something happened in setting up the request that triggered an Error
-                  Log.error('Error', error.message);
+                const statusCode = Log.errorHandlerAPI(error, this.props.ShowErrorMessage);
+                if (statusCode == 404) {
+                    this.setState({
+                        isDataNotFound: true,
+                    });
                 }
+                // let isException = true;
+                // if (error.response) {
+                //   // The request was made and the server responded with a status code
+                //   // that falls out of the range of 2xx
+                //   if (error.response.status == 404) {
+                //       isException = false;
+                //       this.setState({
+                //           isDataNotFound: true,
+                //       })
+                //   } else {
+                //       Log.error(`${error.response.data} HTTP Code = ${error.response.status}`);
+                //   }
+                // } else if (error.request) {
+                //   // The request was made but no response was received
+                //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                //   // http.ClientRequest in node.js
+                //   Log.error(error.request);
+                // } else {
+                //   // Something happened in setting up the request that triggered an Error
+                //   Log.error('Error', error.message);
+                // }
 
-                if (isException) {
-                    // Show Modal Error to refresh page
-                }
+                // if (isException) {
+                //     // Show Modal Error to refresh page
+                //     this.props.ShowErrorMessage("Error Connection", "an error happened while trying to connect to remote server, please try again later");
+                // }
             });
 
     }
@@ -100,32 +106,39 @@ class PokeDetailPage extends Component {
                 this.props.dispatch(PokeStorage.setPokemonSpecies(tempSavingData, this.state.PokeID));
             })
             .catch(error => {
-                let isException = true;
-                if (error.response) {
-                  // The request was made and the server responded with a status code
-                  // that falls out of the range of 2xx
-                  if (error.response.status == 404) {
-                      isException = false;
-                      this.setState({
-                          isDataNotFound: true,
-                      })
-                  } else {
-                      Log.error(`${error.response.data} HTTP Code = ${error.response.status}`);
-                  }
-                } else if (error.request) {
-                  // The request was made but no response was received
-                  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                  // http.ClientRequest in node.js
-                  console.log(error.request);
-                  Log.error(error.request);
-                } else {
-                  // Something happened in setting up the request that triggered an Error
-                  Log.error('Error', error.message);
-                }
 
-                if (isException) {
-                    // Show Modal Error to refresh page
+                const statusCode = Log.errorHandlerAPI(error, this.props.ShowErrorMessage);
+                if (statusCode == 404) {
+                    this.setState({
+                        isDataNotFound: true,
+                    });
                 }
+                // let isException = true;
+                // if (error.response) {
+                //   // The request was made and the server responded with a status code
+                //   // that falls out of the range of 2xx
+                //   if (error.response.status == 404) {
+                //       isException = false;
+                //       this.setState({
+                //           isDataNotFound: true,
+                //       })
+                //   } else {
+                //       Log.error(`${error.response.data} HTTP Code = ${error.response.status}`);
+                //   }
+                // } else if (error.request) {
+                //   // The request was made but no response was received
+                //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                //   // http.ClientRequest in node.js
+                //   Log.error(error.request);
+                // } else {
+                //   // Something happened in setting up the request that triggered an Error
+                //   Log.error('Error', error.message);
+                // }
+
+                // if (isException) {
+                //     // Show Modal Error to refresh page
+                //     this.props.ShowErrorMessage("Error Connection", "an error happened while trying to connect to remote server, please try again later");
+                // }
             });
     }
 

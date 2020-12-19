@@ -63,3 +63,33 @@ export function error(msg, exception) {
     console.error(msg);
   }
 }
+
+export function errorHandlerAPI(error, MessageHandler=()=>{}, surprressMessage=false) {
+  let statusCode = 666;
+  let isException = true;
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    if (error.response.status == 404) {
+        isException = false;
+        statusCode = 404;
+    } else {
+        error(`${error.response.data} HTTP Code = ${error.response.status}`);
+    }
+  } else if (error.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    error(error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    error('Error', error.message);
+  }
+
+  if (isException && !surprressMessage) {
+      // Show Modal Error to refresh page
+      MessageHandler("Error Connection", "an error happened while trying to connect to remote server, please try again later");
+  }
+  return statusCode;
+}
+

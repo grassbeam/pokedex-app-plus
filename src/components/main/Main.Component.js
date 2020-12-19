@@ -20,7 +20,11 @@ export default function MainComponent(props) {
 
 
 MainComponent.propTypes = {
-    children: PropTypes.element.isRequired,
+    children:  PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.arrayOf(PropTypes.element),
+  ]).isRequired,
     PageTitle: PropTypes.string.isRequired,
     ContainerClass: PropTypes.string.isRequired,
 }

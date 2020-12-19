@@ -9,7 +9,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Util, Log, DataStorageType } from '../../../utility';
-import ListPokeDataItemSkeleton from '../../page/pokedata/list-data/ListData.Item.Skeleton';
 import PokeGender from '../../pokemon-detail/poke-gender/PokeGender.Component';
 import PokeItemHeldData from '../../pokemon-detail/poke-items-held/PokeItemsHeld.Component';
 import InfoDetailSkeleton from './InfoDetail.Skeleton';
@@ -48,14 +47,7 @@ const useStyles = makeStyles((theme) => (
     const pokeGenderRate = PokeStorage.getPokemonGenderRateByID(props, PokemonID);
     const pokeGrowthRate = PokeStorage.getPokemonGrowthRateByID(props, PokemonID);
     const pokeCaptureRate = PokeStorage.getPokemonCaptureRateByID(props, PokemonID);
-    const pokeTextFlavor = PokeStorage.getPokemonFlavorTextByID(props, PokemonID);
-
-
-    const dataClickHandler = (pokeID) => {
-      Log.debugStr(`Clicked PokeID = ${pokeID}`);
-      props.history.push(`/detail/${storagePokeData.id}`);
-    }
-
+    
     if (Util.isNullOrUndefined(storagePokeData) || Util.isNullOrUndefined(speciesPokeData)) {
         return (<InfoDetailSkeleton/>);
     } else {

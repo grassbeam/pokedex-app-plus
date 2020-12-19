@@ -42,7 +42,6 @@ class PokeDataPage extends PureComponent {
 
     constructor(props) {
         super(props);
-        const { classes } = props;
         this.state = {
             pageSize: 20,
             totalData: 0,
@@ -58,8 +57,8 @@ class PokeDataPage extends PureComponent {
     }
 
     componentDidMount() {
-        Log.debugStr("Component PokeData Page didMount");
         this.getDefaultListPokemon();
+        this.getFilterTypeMaster();
     }
 
     getDefaultListPokemon() {
@@ -92,6 +91,7 @@ class PokeDataPage extends PureComponent {
                 }, ()=>{
                     listDataPoke.map(dataItm => {
                         this.getDetailPokemon(dataItm.detailURL, dataItm.idx, dataItm.pokeID, 1);
+                        return 0;
                     });
                 });
             }).catch(ex => {
@@ -112,10 +112,39 @@ class PokeDataPage extends PureComponent {
                     const pokemonData = PokeStorage.generatePokeDataFromRemote(response);
                     this.props.dispatch(PokeStorage.setPokemonData(pokemonData, pokeID));
                     // updateloadingStat();
-                }).catch(ex=>{
-                    Log.debugStr(ex);
-            });
+                }).catch(error=>{
+                    Log.errorHandlerAPI(error, this.props.ShowErrorMessage);
+                });
         }
+    }
+
+    getFilterTypeMaster() {
+        const dataUpdater = () => {
+            PokeTypeDS.getPokemonTypesList()
+            .then((res) => res.data)
+            .then((response) => {
+                let responseObj = { };
+                response.results.map((resItem)=>{
+                    let typeID = PokeTypeStorage.getTypeIdFromURL(resItem.url);
+                    responseObj[typeID] = PokeTypeStorage.generateTypeMasterData(resItem);
+                    return 0;
+                })
+                const dispatchObject = PokeTypeStorage.setPokemonTypeData(responseObj);
+                this.props.dispatch(dispatchObject);
+            }).catch(error=>{
+                Log.errorHandlerAPI(error, this.props.ShowErrorMessage, true);
+                this.props.ShowErrorMessage("Error Connection", "an error happened while trying to connect to remote server, please try again later");
+            });
+        };
+
+        if (Util.isNullOrUndefined(PokeTypeStorage.getTypeListData(this.props))) {
+            dataUpdater();
+        } else {
+            if (PokeTypeStorage.checkDataNeedUpdate(this.props, PokeTypeStorage.STORAGE_TYPES_POKE_DATA)) {
+                dataUpdater();
+            }
+;        }
+
     }
 
     handleLoadMorePage() {
@@ -211,6 +240,7 @@ class PokeDataPage extends PureComponent {
             }, ()=>{
                 tempListDataPoke.map(dataItm => {
                     this.getDetailPokemon(dataItm.detailURL, dataItm.idx, dataItm.pokeID, 1);
+                    return 0;
                 });
             });
         } else {
