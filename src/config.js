@@ -12,3 +12,6 @@ export const STOR_KEY = {
 
 export const BASE_API = "https://pokeapi.co/api/";
 export const API_VERSION = 'v2';
+
+
+export const LAST_UPDATE_INTERVAL = 24 // in Hours

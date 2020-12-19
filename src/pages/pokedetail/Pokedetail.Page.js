@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 
-import ListPokeDataItem from '../../components/page/pokedata/ListData.Item.Component';
+import ListPokeDataItem from '../../components/page/pokedata/list-data/ListData.Item.Component';
 import InfoDetailPoke from '../../components/page/pokedetail/InfoDetail.Component';
 import PokeStatsDetail from '../../components/pokemon-detail/poke-stat/PokeStats.Component';
 

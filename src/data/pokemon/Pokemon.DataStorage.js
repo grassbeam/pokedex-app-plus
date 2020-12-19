@@ -11,7 +11,6 @@ export const STORAGE_TYPE_FILTER = "PokeByType";
 const PokeInitialState = {
     [STORAGE_LAST_ACTION]: null, // for logging last component updating this storage
     [STORAGE_POKE_DATA]: {  }, // pokemon data, object key using PokemonID
-    [STORAGE_TYPE_FILTER]: {  }, // data format { "grass": [1,2,3,...] //PokemonID  }
 }
 
 
@@ -49,6 +48,7 @@ export default function PokemonStorage(state=PokeInitialState, action) {
         weight: response.weight,
         types: response.types.map((itm)=>({ slot: itm.slot, name: itm.type.name , url: itm.type.url})),
         stats: response.stats,
+        species: response.species,
     });
   }
 

@@ -45,7 +45,7 @@ function PokeStatsDetail(props) {
             <Grid container spacing={2} >
                 {
                     PokeStatsData.map((pokeStatsData,idx) =>(
-                        <Grid item xs={2}   key={`poke-stats-data-${idx}`}> 
+                        <Grid item sm={2} xs={4}   key={`poke-stats-data-${idx}`}> 
                             <PokeStatsItem 
                                 Point={ pokeStatsData.point }
                                 Title={ pokeStatsData.title }
@@ -74,8 +74,6 @@ function PokeStatsItem(props) {
 
     const powerHeight = Math.ceil(tempIntPoint/15);
 
-    Log.debugGroup(`Check PowerHeight ${Title} = ${Point}`, powerHeight);
-
     const powerLeft = 15-powerHeight;
 
 
@@ -102,7 +100,7 @@ function PokeStatsItem(props) {
             { powerHeightComp }
 
             
-            <Typography variant="body1" gutterBottom style={{ textTransform: 'uppercase', textAlign: 'center' }}>
+            <Typography variant="body2" gutterBottom style={{ textTransform: 'uppercase', textAlign: 'center' }}>
                 { Title }
             </Typography>
         </Box>

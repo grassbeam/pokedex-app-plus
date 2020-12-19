@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Util, Log, DataStorageType } from '../../../utility';
 import PokeTypeList from '../../pokemon-detail/poke-types/PokeTypeList.Component';
-import ListPokeDataItemSkeleton from '../../page/pokedata/ListData.Item.Skeleton';
+import ListPokeDataItemSkeleton from '../../page/pokedata/list-data/ListData.Item.Skeleton';
 import { withRouter } from "react-router-dom";
 
 import * as PokeStorage from '../../../data/pokemon/Pokemon.DataStorage';
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => (
     const storagePokeData = PokeStorage.getPokemonDataByID(props, PokemonID);
     const pokeItemHeldData = PokeStorage.getPokemonHeldItemByID(props, PokemonID);
 
-    Log.debugGroup("Check pokeItemHeldData", pokeItemHeldData);
 
     const dataClickHandler = (pokeID) => {
       Log.debugStr(`Clicked PokeID = ${pokeID}`);
@@ -93,6 +92,9 @@ const useStyles = makeStyles((theme) => (
                                         </Typography>
                                     </div>
                                 ))
+                            }
+                            {
+                                !Util.isNullOrUndefined(pokeItemHeldData) && pokeItemHeldData.length <= 0 && <span>-</span>
                             }
                         </Grid>
                     </Grid>

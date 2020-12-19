@@ -9,12 +9,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 // import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 // import SearchIcon from '@material-ui/icons/Search';
-import { Util, Log, DataStorageType } from '../../../utility';
-import PokeTypeList from '../../pokemon-detail/poke-types/PokeTypeList.Component';
+import { Util, Log, DataStorageType } from '../../../../utility';
+import PokeTypeList from '../../../pokemon-detail/poke-types/PokeTypeList.Component';
 import ListPokeDataItemSkeleton from './ListData.Item.Skeleton';
 import { withRouter } from "react-router-dom";
 
-import * as PokeStorage from '../../../data/pokemon/Pokemon.DataStorage';
+import * as PokeStorage from '../../../../data/pokemon/Pokemon.DataStorage';
 
 
 const useStyles = makeStyles((theme) => (
@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => (
         root: {
         //   maxWidth: 345,
             height: '100%',
+        },
+        mediaCard :{
+          objectFit: 'contain',
         },
         btnLeft: {
             marginLeft: 'auto',
@@ -45,7 +48,6 @@ const useStyles = makeStyles((theme) => (
     }
 
     if (Util.isNullOrUndefined(storagePokeData)) {
-        // Must show error
         return (<ListPokeDataItemSkeleton/>);
     } else {
         return(
@@ -54,6 +56,7 @@ const useStyles = makeStyles((theme) => (
                 {/* <Link to={`/detail/${storagePokeData.id}`}> */}
                 {/* <Link color="inherit" onClick={dataClickHandler}> */}
                   <CardMedia
+                    className={classes.mediaCard}
                     component="img"
                     alt={ storagePokeData.name }
                     height="145"

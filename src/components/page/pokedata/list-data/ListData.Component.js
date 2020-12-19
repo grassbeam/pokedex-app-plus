@@ -1,9 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ListPokeDataItem from './ListData.Item.Component';
 import ListPokeDataItemSkeleton from './ListData.Item.Skeleton';
+import { Util, Log, DataStorageType } from '../../../../utility';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,26 +47,37 @@ export default function ListPokeData (props) {
         }
     }
 
+    Log.debugStr(typeof LoadingNextPage);
+    Log.debugStr(LoadingNextPage);
+
     return (
         <div className={classes.root}>
             <Grid container spacing={2} justify={'center'}>
                 {
-                    ListData.map((item, idx)=>{
-                        return(
-                            <CreateItemGrid key={"PokeData-"+idx}>
-                                {
-                                    item.isLoading?
-                                        <ListPokeDataItemSkeleton />
-                                    :
-                                        <ListPokeDataItem
-                                            PokemonID={item.pokeID}
-                                            disableClick={false}
-                                        />
-                                }
-                                
-                            </CreateItemGrid>
-                        );
-                    })
+                    !LoadingNextPage && ListData.length <=0 &&
+
+                    <Grid item xs={12}>
+                        <Typography variant="h5" style={{ textAlign: 'center'}}>No Data Found</Typography>
+                    </Grid>
+                }
+                {
+                    !LoadingNextPage &&
+                        ListData.map((item, idx)=>{
+                            return(
+                                <CreateItemGrid key={"PokeData-"+idx}>
+                                    {
+                                        // item.isLoading? // change to checking error, if error retry load again
+                                        //     <ListPokeDataItemSkeleton />
+                                        // :
+                                            <ListPokeDataItem
+                                                PokemonID={item.pokeID}
+                                                disableClick={false}
+                                            />
+                                    }
+                                    
+                                </CreateItemGrid>
+                            );
+                        })
                 }
                 {
                     LoadingNextPage && additionalLoading

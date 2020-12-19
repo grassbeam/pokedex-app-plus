@@ -19,7 +19,11 @@ export default function(PageComponent, PageTitle="") {
 
       this.state ={
         isLoadingState: false,
-        isError: false,
+        isShowError: false,
+        ErrorContent: {
+          Title: "Error",
+          Message: "",
+        }
       };
     }
 
@@ -28,6 +32,16 @@ export default function(PageComponent, PageTitle="") {
         this.setState({
           isLoadingState: isShowing
         }, callback);
+    }
+
+    showErrorMessage = (Title, Message) => {
+      this.setState({
+        isShowError: true,
+        ErrorContent: {
+          Title,
+          Message,
+        }
+      });
     }
 
     render() {

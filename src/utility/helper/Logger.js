@@ -48,7 +48,7 @@ export function debugGroupExpandCollapsed(groupTitle, items, isCollapsed) {
   }
 
   
-function error(msg, exception) {
+export function error(msg, exception) {
   if (exception !== null && exception !== undefined) {
     if (exception.message !== null && exception.message !== undefined
       && exception.name !== null && exception.name !== undefined
