@@ -46,7 +46,7 @@ export default function BtnProgress(props) {
 BtnProgress.propTypes = {
   onClick: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  btnClassName: PropTypes.object,
+  btnClassName: PropTypes.string,
   text: PropTypes.string.isRequired,
   variant: PropTypes.string,
   color: PropTypes.string,

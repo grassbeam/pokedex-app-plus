@@ -21,7 +21,10 @@ const styles = (theme) => ({
   btnLoadMore :{
       width: '100%',
       marginTop: theme.spacing(2),
-  }
+  },
+  itemContainer: {
+      height: '100%',
+  },
 });
 
 
@@ -33,6 +36,7 @@ class PokeDetailPage extends Component {
         this.state = {
             PokeID: props.match.params.id,
             PokeData: PokeStorage.getPokemonDataByID(props, props.match.params.id),
+            PokeSpecies: PokeStorage.getPokemonSpeciesByID(props, props.match.params.id),
             isDataNotFound: false,
         };
     }
@@ -41,6 +45,10 @@ class PokeDetailPage extends Component {
         if (Util.isNullOrUndefined(this.state.PokeData)) {
             this.getDetailPokemon();
         }
+        if (Util.isNullOrUndefined(this.state.PokeSpecies)) {
+            this.getSpeciesPokemon();
+        }
+        
     }
 
     getDetailPokemon() {
@@ -84,6 +92,42 @@ class PokeDetailPage extends Component {
 
     }
 
+    getSpeciesPokemon() {
+        PokeDS.getSpeciesPokemonByID(this.state.PokeID)
+            .then(res => res.data)
+            .then(response => {
+                const tempSavingData = PokeStorage.generatePokeSpeciesFromRemote(response);
+                this.props.dispatch(PokeStorage.setPokemonSpecies(tempSavingData, this.state.PokeID));
+            })
+            .catch(error => {
+                let isException = true;
+                if (error.response) {
+                  // The request was made and the server responded with a status code
+                  // that falls out of the range of 2xx
+                  if (error.response.status == 404) {
+                      isException = false;
+                      this.setState({
+                          isDataNotFound: true,
+                      })
+                  } else {
+                      Log.error(`${error.response.data} HTTP Code = ${error.response.status}`);
+                  }
+                } else if (error.request) {
+                  // The request was made but no response was received
+                  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                  // http.ClientRequest in node.js
+                  console.log(error.request);
+                  Log.error(error.request);
+                } else {
+                  // Something happened in setting up the request that triggered an Error
+                  Log.error('Error', error.message);
+                }
+
+                if (isException) {
+                    // Show Modal Error to refresh page
+                }
+            });
+    }
 
 
     render() {
@@ -97,10 +141,10 @@ class PokeDetailPage extends Component {
             <React.Fragment>
                 <Container className={this.props.classes.container} maxWidth="md">
                     <Box>
-                        <Grid container spacing={2} >
+                        <Grid container spacing={2} justify={'center'}>
 
                             <Grid item md={5} sm={6} xs={12}>
-                                <Box>
+                                <Box className={this.props.classes.itemContainer}>
                                         <ListPokeDataItem
                                             PokemonID={this.state.PokeID}
                                             disableClick={true}
@@ -110,7 +154,7 @@ class PokeDetailPage extends Component {
 
 
                             <Grid item md={7} sm={6} xs={12}>
-                                <Box>
+                                <Box className={this.props.classes.itemContainer}>
                                     <InfoDetailPoke 
                                         PokemonID={this.state.PokeID}
                                     />
@@ -119,7 +163,7 @@ class PokeDetailPage extends Component {
 
 
                             <Grid item xs={12}>
-                                <Box>
+                                <Box className={this.props.classes.itemContainer}>
                                     <PokeStatsDetail 
                                         PokemonID={this.state.PokeID}
                                     />

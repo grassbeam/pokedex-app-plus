@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { Util, DataStorageType } from '../../../utility';
 import { withRouter } from "react-router-dom";
 import PokeStatsPoint from './PokeStats.Point.Component';
+import PokeStatsSkeleton from './PokeStats.Skeleton';
 
 import * as PokeStorage from '../../../data/pokemon/Pokemon.DataStorage';
 
@@ -34,9 +35,7 @@ function PokeStatsDetail(props) {
 
     if (Util.isNullOrUndefined(PokeStatsData)) {
         return (
-            <>
-                <h3>Loading...</h3>
-            </>
+            <PokeStatsSkeleton/>
         );
     }
 

@@ -91,6 +91,6 @@ export default function ListPokeData (props) {
 ListPokeData.propTypes = {
     ListData: PropTypes.arrayOf(PropTypes.object).isRequired, 
     PageSize: PropTypes.number.isRequired, 
-    LoadingNextPage: PropTypes.bool.isRequiredu,
+    LoadingNextPage: PropTypes.bool.isRequired,
 };
 
