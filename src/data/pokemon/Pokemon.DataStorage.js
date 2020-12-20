@@ -423,3 +423,16 @@ export default function PokemonStorage(state=PokeInitialState, action) {
   }
 
 
+  export function getCompareStatus(props, pokeID) {
+    var result = 99;
+    if (!Util.isNullOrUndefined(props[DataStorageType.POKE_STORAGE])) {
+
+      if (!Util.isNullOrUndefined(props[DataStorageType.POKE_STORAGE][STORAGE_POKE_COMPARE])) {
+        const tempResult = props[DataStorageType.POKE_STORAGE][STORAGE_POKE_COMPARE][pokeID];
+        result = ( !Util.isNullOrEmpty(tempResult)? tempResult : 99 )
+      }
+      
+    } 
+    return result;
+  }
+

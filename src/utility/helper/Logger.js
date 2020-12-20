@@ -64,26 +64,26 @@ export function error(msg, exception) {
   }
 }
 
-export function errorHandlerAPI(error, MessageHandler=()=>{}, surprressMessage=false) {
+export function errorHandlerAPI(errorAPI, MessageHandler=()=>{}, surprressMessage=false) {
   let statusCode = 666;
   let isException = true;
-  if (error.response) {
+  if (errorAPI.response) {
     // The request was made and the server responded with a status code
     // that falls out of the range of 2xx
-    if (error.response.status == 404) {
+    if (errorAPI.response.status == 404) {
         isException = false;
         statusCode = 404;
     } else {
-        error(`${error.response.data} HTTP Code = ${error.response.status}`);
+        error(`${errorAPI.response.data} HTTP Code = ${errorAPI.response.status}`);
     }
-  } else if (error.request) {
+  } else if (errorAPI.request) {
     // The request was made but no response was received
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
-    error(error.request);
+    error(errorAPI.request);
   } else {
     // Something happened in setting up the request that triggered an Error
-    error('Error', error.message);
+    error('Error', errorAPI.message);
   }
 
   if (isException && !surprressMessage) {

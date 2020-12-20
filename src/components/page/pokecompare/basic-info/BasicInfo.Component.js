@@ -23,6 +23,7 @@ function BasicInfoComponent(props) {
 
     const data = Array.from({ length: ArrPokeID.length }, () => ({ PokeID:"", PokeData: null, PokeSpecies: null }));
 
+
     for (let i = 0; i < ArrPokeID.length; i++) {
         const pokeID = ArrPokeID[i];
         const tempData = data[i];

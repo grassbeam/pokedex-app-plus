@@ -4,10 +4,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 
 import { TableTitleSeparator } from '../../components/page/pokecompare/compare-wrapper/CompareWrapper.Component';
 import HeaderInputComponent from '../../components/page/pokecompare/header-input/HeaderInput.Component';
@@ -65,7 +62,6 @@ class PokeComparePage extends PureComponent {
         this.state = {
             compareSize: compareSize,
             comparingPokeID: Array(compareSize).fill(""),
-            comparingPokeData: Array(compareSize).fill({ pokeData: null, pokeSpecies: null }),
             isLoadingData: false,
             isDownloadingData: false,
             gameVersionType: "",
@@ -103,10 +99,10 @@ class PokeComparePage extends PureComponent {
                 var waitingResult = false;
                 if (Util.isNullOrUndefined(PokeData)) {
                     waitingResult = true;
-                    this.getDetailPokemon(pokeID);
+                    this.getDetailPokemon(pokeID, idx);
                 } else if (Util.isNullOrUndefined(PokeSpecies)) {
                     waitingResult = true;
-                    this.getSpeciesPokemon(pokeID);
+                    this.getSpeciesPokemon(pokeID, idx);
                 }
                 if (waitingResult) {
                     this.props.dispatch(PokeStorage.setStatusCompare(99, pokeID));
@@ -119,7 +115,7 @@ class PokeComparePage extends PureComponent {
         });
     }
 
-    getDetailPokemon(PokeID) {
+    getDetailPokemon(PokeID, compareIdx) {
         PokeDS.getDetailAndSpeciesPokemonByID(PokeID)
             .then(responses => {
                 var pokeData = null;
@@ -148,15 +144,24 @@ class PokeComparePage extends PureComponent {
                     this.props.dispatch(PokeStorage.setPokemonSpecies(tempSavingPokeSpecies, PokeID));
                 }
 
+                this.props.dispatch(PokeStorage.setStatusCompare(1, PokeID));
             })
             .catch(error=>{
-                Log.error(error);
-                Log.errorHandlerAPI(error, this.props.ShowErrorMessage);
+                const statusCode = Log.errorHandlerAPI(error, this.props.ShowErrorMessage);
+                if (statusCode == 404) {
+                    var tempdata = this.state.comparingPokeID;
+                    tempdata[compareIdx] = ""; // Removing the compare index, make it like the slot is not being use for comparing
+                    this.setState({
+                        comparingPokeID: tempdata,
+                    },() => {
+                        this.props.dispatch(PokeStorage.setStatusCompare(0, PokeID));
+                    });
+                }
             });
 
     }
 
-    getSpeciesPokemon(PokeID) {
+    getSpeciesPokemon(PokeID, compareIdx) {
         PokeDS.getSpeciesPokemonByID(PokeID)
             .then(res => res.data)
             .then(response => {
@@ -165,8 +170,7 @@ class PokeComparePage extends PureComponent {
             })
             .catch(error => {
                 const statusCode = Log.errorHandlerAPI(error, this.props.ShowErrorMessage);
-                if (statusCode == 404) {
-                }
+                
             });
     }
 
@@ -178,8 +182,6 @@ class PokeComparePage extends PureComponent {
             })
             .catch(error => {
                 const statusCode = Log.errorHandlerAPI(error, this.props.ShowErrorMessage);
-                if (statusCode == 404) {
-                }
             });
 
     }

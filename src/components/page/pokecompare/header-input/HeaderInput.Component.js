@@ -51,9 +51,8 @@ function HeaderInputComponent(props) {
     const loadingMasterData = Util.isNullOrUndefined(typeGameVersionData);
 
     const handleClickCompare = () => {
-        Log.debugGroup("ComparingPokeID", inputState);
         if (!Util.isNullOrEmpty(gameVersionType)) {
-            onSubmitCompare(inputState, gameVersionType);
+            onSubmitCompare([...inputState], gameVersionType);
         } else {
             // show error
             setFormError({
