@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - User can view detailed information of each pokemon 
 
-- User can filter list of pokemon based on an Types(fire / water / grass / etc...) of the pokemon 
+- User can filter list of pokemon based on Types(fire / water / grass / etc...) of the pokemon 
 
 - User can compare between (max to) 3 pokemon
 
