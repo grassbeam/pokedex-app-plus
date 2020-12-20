@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => (
                                 Height
                             </Typography>
                             <Typography className={classes.textContent} variant="body2" gutterBottom>
-                                {storagePokeData.height}
+                                {Util.isNullOrEmpty(storagePokeData.height)? "???":storagePokeData.height}
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => (
                                 Weight
                             </Typography>
                             <Typography className={classes.textContent} variant="body2" gutterBottom>
-                                {storagePokeData.weight}
+                                {Util.isNullOrEmpty(storagePokeData.weight)? "???":storagePokeData.weight}
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => (
                                 Body Shape
                             </Typography>
                             <Typography className={classes.textContent} variant="body2" gutterBottom>
-                                {speciesPokeData.shape.name}
+                                { Util.isNullOrUndefined(speciesPokeData.shape)? "???" : (Util.isNullOrEmpty(speciesPokeData.shape.name)?"???":speciesPokeData.shape.name) }
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => (
                                 Habitat
                             </Typography>
                             <Typography className={classes.textContent} variant="body2" gutterBottom>
-                                {speciesPokeData.habitat.name}
+                                { Util.isNullOrUndefined(speciesPokeData.habitat)? "???" : (Util.isNullOrEmpty(speciesPokeData.habitat.name)?"???":speciesPokeData.habitat.name) }
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
