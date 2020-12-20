@@ -6,6 +6,7 @@ import * as Config from '../../config';
 export const STORAGE_LAST_ACTION = "LastAction";
 export const STORAGE_TYPES_POKE_DATA = "PokeTypes";
 export const STORAGE_TYPES_DETAIL_DATA = "PokeTypesDetail";
+export const STORAGE_TYPES_GAME_VERSION = "PokeGameVersion";
 
 
 const PokeInitialState = {
@@ -14,6 +15,10 @@ const PokeInitialState = {
         LastUpdate: new Date(),
         Data: null,
      }, // pokemon type master data, key = type ID => { type_id: { id: 123, name: "typeName", url: "url/", data: null } }
+     [STORAGE_TYPES_GAME_VERSION]: {
+        LastUpdate: new Date(),
+        Data: null,
+     }
 }
 
 
@@ -43,6 +48,16 @@ export default function PokemonTypeStorage(state=PokeInitialState, action) {
                 }
             }
           }
+      } else if (action.strloc === STORAGE_TYPES_GAME_VERSION) {
+        return {
+          ...state,
+          [STORAGE_LAST_ACTION]: action.payload,
+          [STORAGE_TYPES_GAME_VERSION]: {
+              ...state[STORAGE_TYPES_GAME_VERSION],
+              ...action.value,
+              
+          }
+        }
       } else { 
         return {
             ...state,
@@ -116,6 +131,23 @@ export function setPokemonTypeDetailData(data, typeID) {
 }
 
 
+/**
+ * @param {Array} data = return object response from function Type.DataSource.getGameVersionTypeList
+ * 
+ */
+export function setGameVersionData(data) {
+  const dispatchingData = {
+      LastUpdate: new Date(),
+      Data: data,
+  };
+  return DataStorageHelper.CreateDispatcherObj(
+      DataStorageType.POKE_TYPE_STORAGE
+      , `result_of_setGameVersionData(data[${data.length}])`
+      , STORAGE_TYPES_GAME_VERSION
+      , dispatchingData
+  );
+}
+
 
 // ========= GETTER DATA ========= //
 
@@ -167,8 +199,8 @@ export function setPokemonTypeDetailData(data, typeID) {
       if (!Util.isNullOrUndefined(props[DataStorageType.POKE_TYPE_STORAGE])) {
         if (!Util.isNullOrUndefined(props[DataStorageType.POKE_TYPE_STORAGE][storeLocation])) {
 
-            if (!Util.isNullOrUndefined(props[DataStorageType.POKE_TYPE_STORAGE][storeLocation].LastUpdate)) {
-                let tempLastDate = props[DataStorageType.POKE_TYPE_STORAGE][storeLocation].LastUpdate;
+            if (!Util.isNullOrUndefined(props[DataStorageType.POKE_TYPE_STORAGE][storeLocation]["LastUpdate"])) {
+                let tempLastDate = props[DataStorageType.POKE_TYPE_STORAGE][storeLocation]["LastUpdate"];
                 let tempNowDate = new Date();
                 const dateDiff = parseInt((tempNowDate-tempLastDate)/(3600*1000)); // date Diff in hours
                 result = !!(dateDiff >= Config.LAST_UPDATE_INTERVAL);
@@ -261,5 +293,18 @@ export const countTypeDataPokemonByID = (props, typeID, limit=0, offset=0) =>{
 }
 
 
+
+export const getTypeGameVersion = (props) => {
+  var result = null;
+  if (!Util.isNullOrUndefined(props[DataStorageType.POKE_TYPE_STORAGE])) {
+
+    if (!Util.isNullOrUndefined(props[DataStorageType.POKE_TYPE_STORAGE][STORAGE_TYPES_GAME_VERSION])) {
+        
+      result = props[DataStorageType.POKE_TYPE_STORAGE][STORAGE_TYPES_GAME_VERSION]["Data"];
+    }
+    
+  } 
+  return result;
+}
 
 

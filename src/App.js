@@ -11,6 +11,7 @@ const HOCPages = {
   PokeData: withMainComponent(Pages.PokeData, "PokeDex Plus"),
   PokeDetail: withMainComponent(Pages.PokeDetail, "PokeDex Plus"),
   Error404: withMainComponent(Pages.Error404, "PokeDex Plus"),
+  PokeCompare: withMainComponent(Pages.PokeCompare, "PokeDex Plus"),
 }
 
 const theme = createMuiTheme({
@@ -32,6 +33,7 @@ function App() {
                 <Route exact path="/" component={HOCPages.PokeData} />
                 <Route path="/detail/:id" component={HOCPages.PokeDetail}  />
                 <Route exact path="/error-404" component={HOCPages.Error404} />
+                <Route exact path="/compare" component={HOCPages.PokeCompare} />
           </Switch>
         </BrowserRouter>
       </ThemeProvider>

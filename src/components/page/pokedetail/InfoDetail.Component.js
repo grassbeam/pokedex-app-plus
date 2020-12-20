@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => (
                                 Height
                             </Typography>
                             <Typography className={classes.textContent} variant="body2" gutterBottom>
-                                {Util.isNullOrEmpty(storagePokeData.height)? "???":storagePokeData.height}
+                                { PokeStorage.getPokemonHeight(storagePokeData.height) }
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => (
                                 Weight
                             </Typography>
                             <Typography className={classes.textContent} variant="body2" gutterBottom>
-                                {Util.isNullOrEmpty(storagePokeData.weight)? "???":storagePokeData.weight}
+                                { PokeStorage.getPokemonWeight(storagePokeData.weight) }
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>

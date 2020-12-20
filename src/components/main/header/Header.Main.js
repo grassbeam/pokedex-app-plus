@@ -36,7 +36,7 @@ function MainHeader (props) {
                   </Typography>
                     
                     
-                <Button color="inherit" onClick={()=>props.history.push("/login")} >Compare Pokemon</Button>
+                <Button color="inherit" onClick={()=>props.history.push("/compare")} >Compare Pokemon</Button>
                 
             </Toolbar>
         </AppBar>

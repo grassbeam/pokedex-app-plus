@@ -12,3 +12,6 @@ export const getPokemonTypesList = () => axios.get(`${Config.BASE_API}${Config.A
 export const getPokemonTypeByID = (typeID) => axios.get(`${Config.BASE_API}${Config.API_VERSION}/type/${typeID}`);
 
 
+export const getGameVersionTypeList = () => axios.get(`${Config.BASE_API}${Config.API_VERSION}/version-group/?limit=100&offset=0`);
+
+

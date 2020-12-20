@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 
 import ListPokeDataItem from '../../components/page/pokedata/list-data/ListData.Item.Component';
@@ -28,7 +27,7 @@ const styles = (theme) => ({
 });
 
 
-class PokeDetailPage extends Component {
+class PokeDetailPage extends PureComponent {
 
     constructor(props) {
         super(props);
@@ -68,32 +67,6 @@ class PokeDetailPage extends Component {
                         isDataNotFound: true,
                     });
                 }
-                // let isException = true;
-                // if (error.response) {
-                //   // The request was made and the server responded with a status code
-                //   // that falls out of the range of 2xx
-                //   if (error.response.status == 404) {
-                //       isException = false;
-                //       this.setState({
-                //           isDataNotFound: true,
-                //       })
-                //   } else {
-                //       Log.error(`${error.response.data} HTTP Code = ${error.response.status}`);
-                //   }
-                // } else if (error.request) {
-                //   // The request was made but no response was received
-                //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                //   // http.ClientRequest in node.js
-                //   Log.error(error.request);
-                // } else {
-                //   // Something happened in setting up the request that triggered an Error
-                //   Log.error('Error', error.message);
-                // }
-
-                // if (isException) {
-                //     // Show Modal Error to refresh page
-                //     this.props.ShowErrorMessage("Error Connection", "an error happened while trying to connect to remote server, please try again later");
-                // }
             });
 
     }
@@ -113,32 +86,6 @@ class PokeDetailPage extends Component {
                         isDataNotFound: true,
                     });
                 }
-                // let isException = true;
-                // if (error.response) {
-                //   // The request was made and the server responded with a status code
-                //   // that falls out of the range of 2xx
-                //   if (error.response.status == 404) {
-                //       isException = false;
-                //       this.setState({
-                //           isDataNotFound: true,
-                //       })
-                //   } else {
-                //       Log.error(`${error.response.data} HTTP Code = ${error.response.status}`);
-                //   }
-                // } else if (error.request) {
-                //   // The request was made but no response was received
-                //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                //   // http.ClientRequest in node.js
-                //   Log.error(error.request);
-                // } else {
-                //   // Something happened in setting up the request that triggered an Error
-                //   Log.error('Error', error.message);
-                // }
-
-                // if (isException) {
-                //     // Show Modal Error to refresh page
-                //     this.props.ShowErrorMessage("Error Connection", "an error happened while trying to connect to remote server, please try again later");
-                // }
             });
     }
 
